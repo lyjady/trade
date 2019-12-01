@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="trade-api" />
+        <module name="trade-pojo" />
+        <module name="trade-common" />
+        <module name="trade-pay-web" />
+        <module name="trade-order-service" />
+        <module name="trade-order-web" />
+        <module name="trade-coupon-service" />
+        <module name="trade-pay-service" />
+        <module name="trade-user-service" />
+        <module name="trade-goods-service" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="trade-api" target="1.8" />
+      <module name="trade-common" target="1.8" />
+      <module name="trade-coupon-service" target="1.8" />
+      <module name="trade-goods-service" target="1.8" />
+      <module name="trade-order-service" target="1.8" />
+      <module name="trade-order-web" target="1.8" />
+      <module name="trade-parent" target="1.8" />
+      <module name="trade-pay-service" target="1.8" />
+      <module name="trade-pay-web" target="1.8" />
+      <module name="trade-pojo" target="1.8" />
+      <module name="trade-user-service" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="trade-api" options="-parameters" />
+      <module name="trade-common" options="-parameters" />
+      <module name="trade-coupon-service" options="-parameters" />
+      <module name="trade-goods-service" options="-parameters" />
+      <module name="trade-order-service" options="-parameters" />
+      <module name="trade-order-web" options="-parameters" />
+      <module name="trade-parent" options="-parameters" />
+      <module name="trade-pay-service" options="-parameters" />
+      <module name="trade-pay-web" options="-parameters" />
+      <module name="trade-pojo" options="-parameters" />
+      <module name="trade-user-service" options="-parameters" />
+    </option>
+  </component>
+</project>

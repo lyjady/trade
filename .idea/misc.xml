@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/trade-api/pom.xml" />
+        <option value="$PROJECT_DIR$/trade-common/pom.xml" />
+        <option value="$PROJECT_DIR$/trade-coupon-service/pom.xml" />
+        <option value="$PROJECT_DIR$/trade-goods-service/pom.xml" />
+        <option value="$PROJECT_DIR$/trade-order-service/pom.xml" />
+        <option value="$PROJECT_DIR$/trade-order-web/pom.xml" />
+        <option value="$PROJECT_DIR$/trade-pay-service/pom.xml" />
+        <option value="$PROJECT_DIR$/trade-pay-web/pom.xml" />
+        <option value="$PROJECT_DIR$/trade-pojo/pom.xml" />
+        <option value="$PROJECT_DIR$/trade-user-service/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

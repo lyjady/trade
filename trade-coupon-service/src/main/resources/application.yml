@@ -1,0 +1,2 @@
+mybatis:
+  mapper-locations: classpath:/com/example/coupon/mapper/*.xml

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/trade-api/trade-api.iml" filepath="$PROJECT_DIR$/trade-api/trade-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/trade-common/trade-common.iml" filepath="$PROJECT_DIR$/trade-common/trade-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/trade-coupon-service/trade-coupon-service.iml" filepath="$PROJECT_DIR$/trade-coupon-service/trade-coupon-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/trade-goods-service/trade-goods-service.iml" filepath="$PROJECT_DIR$/trade-goods-service/trade-goods-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/trade-order-service/trade-order-service.iml" filepath="$PROJECT_DIR$/trade-order-service/trade-order-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/trade-order-web/trade-order-web.iml" filepath="$PROJECT_DIR$/trade-order-web/trade-order-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/trade-pay-service/trade-pay-service.iml" filepath="$PROJECT_DIR$/trade-pay-service/trade-pay-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/trade-pay-web/trade-pay-web.iml" filepath="$PROJECT_DIR$/trade-pay-web/trade-pay-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/trade-pojo/trade-pojo.iml" filepath="$PROJECT_DIR$/trade-pojo/trade-pojo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/trade-user-service/trade-user-service.iml" filepath="$PROJECT_DIR$/trade-user-service/trade-user-service.iml" />
+    </modules>
+  </component>
+</project>
