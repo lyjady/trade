@@ -3,10 +3,12 @@ package com.example.goods.mapper;
 
 import com.example.pojo.pojo.TradeGoods;
 import com.example.pojo.pojo.TradeGoodsExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface TradeGoodsMapper {
     int countByExample(TradeGoodsExample example);
 

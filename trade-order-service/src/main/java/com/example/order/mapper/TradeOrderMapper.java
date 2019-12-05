@@ -2,10 +2,12 @@ package com.example.order.mapper;
 
 import com.example.pojo.pojo.TradeOrder;
 import com.example.pojo.pojo.TradeOrderExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface TradeOrderMapper {
     int countByExample(TradeOrderExample example);
 
