@@ -50,11 +50,13 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public Result reduceGoodsNum(TradeGoodsNumberLog numberLog) {
         if (numberLog == null) {
+            System.out.println("GoodsServiceImpl.reduceGoodsNum numberLog == null");;
             CastException.cast(ShopCode.SHOP_REQUEST_PARAMETER_VALID);
         }
         //查询出商品
         TradeGoods tradeGoods = tradeGoodsMapper.selectByPrimaryKey(numberLog.getGoodsId());
         if (tradeGoods.getGoodsNumber() < numberLog.getGoodsNumber()) {
+            System.out.println("GoodsServiceImpl.reduceGoodsNum tradeGoods.getGoodsNumber() < numberLog.getGoodsNumber()");
             CastException.cast(ShopCode.SHOP_GOODS_NUM_NOT_ENOUGH);
         }
         //减库存

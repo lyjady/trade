@@ -1,8 +1,9 @@
 package com.example.pojo.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class TradeUser {
+public class TradeUser implements Serializable {
     private Long userId;
 
     private String userName;
@@ -71,5 +72,18 @@ public class TradeUser {
 
     public void setUserMoney(Long userMoney) {
         this.userMoney = userMoney;
+    }
+
+    @Override
+    public String toString() {
+        return "TradeUser{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", userPassword='" + userPassword + '\'' +
+                ", userMobile='" + userMobile + '\'' +
+                ", userScore=" + userScore +
+                ", userRegTime=" + userRegTime +
+                ", userMoney=" + userMoney +
+                '}';
     }
 }

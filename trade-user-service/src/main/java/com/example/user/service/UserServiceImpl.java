@@ -52,14 +52,15 @@ public class UserServiceImpl implements UserService{
     @Override
     public Result changeUserMoney(TradeUserMoneyLog log) {
         //判断请求参数是否合法
-        if (log != null || log.getUserId() != null || log.getOrderId() != null || log.getUseMoney().compareTo(BigDecimal.ZERO) == -1) {
+        if (log == null || log.getUserId() == null || log.getOrderId() == null || log.getUseMoney().compareTo(BigDecimal.ZERO) == -1) {
             CastException.cast(ShopCode.SHOP_REQUEST_PARAMETER_VALID);
         }
         //查询该订单是否存在付款记录
         TradeUserMoneyLogExample example = new TradeUserMoneyLogExample();
         example.createCriteria().andUserIdEqualTo(log.getUserId()).andOrderIdEqualTo(log.getOrderId());
         int count = tradeUserMoneyLogMapper.countByExample(example);
-        TradeUser user = tradeUserMapper.selectByPrimaryKey(log.getOrderId());
+        TradeUser user = tradeUserMapper.selectByPrimaryKey(log.getUserId());
+        System.out.println(user);
         //扣减余额操作
         if (log.getMoneyLogType().equals(ShopCode.SHOP_USER_MONEY_PAID.getCode())) {
             if (count > 0) {

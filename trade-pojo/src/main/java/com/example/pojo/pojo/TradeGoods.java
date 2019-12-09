@@ -1,9 +1,12 @@
 package com.example.pojo.pojo;
 
+import org.springframework.stereotype.Service;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class TradeGoods {
+public class TradeGoods implements Serializable {
     private Long goodsId;
 
     private String goodsName;

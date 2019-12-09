@@ -51,8 +51,8 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private TradeOrderMapper tradeOrderMapper;
 
-    @Autowired
-    private RocketMQTemplate rocketMQTemplate;
+//    @Autowired
+//    private RocketMQTemplate rocketMQTemplate;
 
     @Autowired
     private IDWorker idWorker;
@@ -90,13 +90,13 @@ public class OrderServiceImpl implements OrderService {
             entity.setUserId(order.getUserId());
             entity.setUserMoney(order.getMoneyPaid());
             //2.返回失败状态
-            Message message = new Message(topic, tag, order.getOrderId().toString(), JSON.toJSONString(entity).getBytes(StandardCharsets.UTF_8));
-            try {
-                rocketMQTemplate.getProducer().send(message);
-            } catch (MQClientException | RemotingException | MQBrokerException | InterruptedException ex) {
-                ex.printStackTrace();
-                CastException.cast(ShopCode.SHOP_MQ_SEND_MESSAGE_FAIL);
-            }
+//            Message message = new Message(topic, tag, order.getOrderId().toString(), JSON.toJSONString(entity).getBytes(StandardCharsets.UTF_8));
+//            try {
+//                rocketMQTemplate.getProducer().send(message);
+//            } catch (MQClientException | RemotingException | MQBrokerException | InterruptedException ex) {
+//                ex.printStackTrace();
+//                CastException.cast(ShopCode.SHOP_MQ_SEND_MESSAGE_FAIL);
+//            }
             return new Result(ShopCode.SHOP_FAIL.getSuccess(), ShopCode.SHOP_FAIL.getMessage());
         }
     }
@@ -178,10 +178,10 @@ public class OrderServiceImpl implements OrderService {
                 }
             }
         } else {
-            order.setCouponPaid(BigDecimal.ZERO);
+            order.setMoneyPaid(BigDecimal.ZERO);
         }
         //7.计算订单支付总价
-        order.setPayAmount(orderAmount.subtract(moneyPaid).subtract(order.getCouponPaid()));
+        order.setPayAmount(orderAmount.subtract(order.getCouponPaid()).subtract(order.getMoneyPaid()));
         //8.保存订单
         int index = tradeOrderMapper.insertSelective(order);
         if (index != ShopCode.SHOP_SUCCESS.getCode()) {
@@ -203,6 +203,7 @@ public class OrderServiceImpl implements OrderService {
         TradeGoodsNumberLog log = new TradeGoodsNumberLog();
         log.setGoodsNumber(order.getGoodsNumber());
         log.setGoodsId(order.getGoodsId());
+        log.setOrderId(order.getOrderId());
         log.setGoodsNumber(order.getGoodsNumber());
         Result result = goodsService.reduceGoodsNum(log);
         if (result.getSuccess().equals(ShopCode.SHOP_FAIL.getSuccess())) {
@@ -216,6 +217,7 @@ public class OrderServiceImpl implements OrderService {
         if (order.getCouponId() != null) {
             TradeCoupon coupon = new TradeCoupon();
             coupon.setCouponId(order.getCouponId());
+            coupon.setCouponPrice(order.getCouponPaid());
             coupon.setIsUsed(ShopCode.SHOP_COUPON_ISUSED.getCode());
             coupon.setUsedTime(new Date());
             Result result = couponService.changeCouponStatus(coupon);

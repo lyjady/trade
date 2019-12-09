@@ -1,9 +1,10 @@
 package com.example.pojo.pojo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class TradeUserMoneyLog extends TradeUserMoneyLogKey {
+public class TradeUserMoneyLog extends TradeUserMoneyLogKey implements Serializable {
     private BigDecimal useMoney;
 
     private Date createTime;

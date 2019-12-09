@@ -1,11 +1,12 @@
 package com.example.pojo.pojo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class TradeOrderExample {
+public class TradeOrderExample implements Serializable {
     protected String orderByClause;
 
     protected boolean distinct;

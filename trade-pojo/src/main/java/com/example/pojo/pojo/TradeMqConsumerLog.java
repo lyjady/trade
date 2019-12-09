@@ -1,8 +1,9 @@
 package com.example.pojo.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class TradeMqConsumerLog extends TradeMqConsumerLogKey {
+public class TradeMqConsumerLog extends TradeMqConsumerLogKey implements Serializable {
     private String msgId;
 
     private String msgBody;

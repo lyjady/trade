@@ -29,7 +29,7 @@ class TradeOrderServiceApplicationTests {
 		order.setOrderAmount(new BigDecimal(8000));
 		order.setGoodsPrice(new BigDecimal(8000));
 		order.setShippingFee(BigDecimal.ZERO);
-		order.setPayAmount(new BigDecimal(1000));
+		order.setMoneyPaid(new BigDecimal(1000));
 		orderService.confirmOrder(order);
 	}
 }
