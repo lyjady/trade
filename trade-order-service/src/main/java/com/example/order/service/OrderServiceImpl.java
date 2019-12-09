@@ -2,6 +2,7 @@ package com.example.order.service;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSON;
 import com.example.api.service.CouponService;
 import com.example.api.service.GoodsService;
 import com.example.api.service.OrderService;
@@ -10,14 +11,22 @@ import com.example.common.constant.ShopCode;
 import com.example.common.exception.CastException;
 import com.example.common.utils.IDWorker;
 import com.example.order.mapper.TradeOrderMapper;
+import com.example.pojo.entry.MQEntity;
 import com.example.pojo.entry.Result;
 import com.example.pojo.pojo.*;
+import org.apache.rocketmq.client.exception.MQBrokerException;
+import org.apache.rocketmq.client.exception.MQClientException;
+import org.apache.rocketmq.common.message.Message;
+import org.apache.rocketmq.remoting.exception.RemotingException;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 /**
@@ -43,7 +52,16 @@ public class OrderServiceImpl implements OrderService {
     private TradeOrderMapper tradeOrderMapper;
 
     @Autowired
+    private RocketMQTemplate rocketMQTemplate;
+
+    @Autowired
     private IDWorker idWorker;
+
+    @Value("${mq.order.topic}")
+    private String topic;
+
+    @Value("${mq.order.tag.cancel}")
+    private String tag;
 
     @Override
     public Result confirmOrder(TradeOrder order) {
@@ -57,18 +75,32 @@ public class OrderServiceImpl implements OrderService {
             //4.扣减优惠券
             changeCouponStatus(order);
             //5.使用余额
-
+            reduceUserMoney(order);
             //6.确认订单
-
+            updateOrderStatus(order);
             //7.返回成功状态
-
+            logger.info("订单:["+order.getOrderId()+"]确认成功");
+            return new Result(ShopCode.SHOP_SUCCESS.getSuccess(), ShopCode.SHOP_SUCCESS.getMessage());
         } catch (Exception e) {
             //1.确认订单失败,发送消息
-
+            MQEntity entity = new MQEntity();
+            entity.setCouponId(order.getCouponId());
+            entity.setGoodsId(order.getGoodsId());
+            entity.setGoodsNum(order.getGoodsNumber());
+            entity.setUserId(order.getUserId());
+            entity.setUserMoney(order.getMoneyPaid());
             //2.返回失败状态
+            Message message = new Message(topic, tag, order.getOrderId().toString(), JSON.toJSONString(entity).getBytes(StandardCharsets.UTF_8));
+            try {
+                rocketMQTemplate.getProducer().send(message);
+            } catch (MQClientException | RemotingException | MQBrokerException | InterruptedException ex) {
+                ex.printStackTrace();
+                CastException.cast(ShopCode.SHOP_MQ_SEND_MESSAGE_FAIL);
+            }
+            return new Result(ShopCode.SHOP_FAIL.getSuccess(), ShopCode.SHOP_FAIL.getMessage());
         }
-        return null;
     }
+
 
     private void checkOrder(TradeOrder order) {
         //1.校验订单是否存在
@@ -172,6 +204,11 @@ public class OrderServiceImpl implements OrderService {
         log.setGoodsNumber(order.getGoodsNumber());
         log.setGoodsId(order.getGoodsId());
         log.setGoodsNumber(order.getGoodsNumber());
+        Result result = goodsService.reduceGoodsNum(log);
+        if (result.getSuccess().equals(ShopCode.SHOP_FAIL.getSuccess())) {
+            CastException.cast(ShopCode.SHOP_REDUCE_GOODS_NUM_FAIL);
+        }
+        logger.info("订单:["+order.getOrderId()+"]扣减库存["+order.getGoodsNumber()+"个]成功");
     }
 
     private void changeCouponStatus(TradeOrder order) {
@@ -182,10 +219,38 @@ public class OrderServiceImpl implements OrderService {
             coupon.setIsUsed(ShopCode.SHOP_COUPON_ISUSED.getCode());
             coupon.setUsedTime(new Date());
             Result result = couponService.changeCouponStatus(coupon);
-            if (!result.getSuccess()) {
+            if (result.getSuccess().equals(ShopCode.SHOP_FAIL.getSuccess())) {
                 CastException.cast(ShopCode.SHOP_COUPON_USE_FAIL);
             }
             logger.info("订单:["+order.getOrderId()+"]使用扣减优惠券["+coupon.getCouponPrice()+"元]成功");
         }
+    }
+
+    private void reduceUserMoney(TradeOrder order) {
+        //判断订单的余额信息是否合法
+        if (order.getMoneyPaid() != null && order.getMoneyPaid().compareTo(BigDecimal.ZERO) == 1) {
+            TradeUserMoneyLog log = new TradeUserMoneyLog();
+            log.setOrderId(order.getOrderId());
+            log.setUserId(order.getUserId());
+            log.setUseMoney(order.getMoneyPaid());
+            log.setMoneyLogType(ShopCode.SHOP_USER_MONEY_PAID.getCode());
+            //扣减余额
+            Result result = userService.changeUserMoney(log);
+            if (result.getSuccess().equals(ShopCode.SHOP_FAIL.getSuccess())) {
+                CastException.cast(ShopCode.SHOP_USER_MONEY_REDUCE_FAIL);
+            }
+            logger.info("订单:["+order.getOrderId()+"扣减余额["+order.getMoneyPaid()+"元]成功]");
+        }
+    }
+
+    private void updateOrderStatus(TradeOrder order) {
+        order.setOrderStatus(ShopCode.SHOP_ORDER_CONFIRM.getCode());
+        order.setPayStatus(ShopCode.SHOP_ORDER_PAY_STATUS_NO_PAY.getCode());
+        order.setConfirmTime(new Date());
+        int index = tradeOrderMapper.updateByPrimaryKeySelective(order);
+        if (index < 0) {
+            CastException.cast(ShopCode.SHOP_ORDER_CONFIRM_FAIL);
+        }
+        logger.info("订单:["+order.getOrderId()+"]状态修改成功");
     }
 }

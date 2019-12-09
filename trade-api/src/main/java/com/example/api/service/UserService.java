@@ -1,6 +1,8 @@
 package com.example.api.service;
 
+import com.example.pojo.entry.Result;
 import com.example.pojo.pojo.TradeUser;
+import com.example.pojo.pojo.TradeUserMoneyLog;
 
 /**
  * @author LinYongJin
@@ -16,4 +18,13 @@ public interface UserService {
      * @description 根据id查询用户
      */
     TradeUser findOne(long id);
+
+    /**
+     * @param log
+     * @return com.example.pojo.entry.Result
+     * @author LinYongJin
+     * @date 2019/12/9 20:28
+     * @description 改变用户余额
+     */
+    Result changeUserMoney(TradeUserMoneyLog log);
 }
