@@ -1,2 +1,20 @@
+spring:
+  application:
+    name: dubbo-pay-provider
+  dubbo:
+    application:
+      name: dubbo-pay-provider
+      id: dubbo-pay-provider
+    registry:
+      address: zookeeper://192.168.0.110:2181;zookeeper://192.168.0.110:2182;zookeeper://192.168.0.110:2183
+    server: true
+    protocol:
+      name: dubbo
+      port: 20880
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/trade?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456
 mybatis:
-  mapper-locations: classpath:/com/example/pay/mapper/*.xml
+  mapper-locations: classpath:com/example/order/mapper/*.xml

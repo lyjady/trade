@@ -18,10 +18,10 @@ spring:
     password: 123456
 mybatis:
   mapper-locations: classpath:com/example/user/mapper/*.xml
-#rocketmq:
-#  name-server: 192.168.25.110:9876;192.168.25.105:9876
-#  producer:
-#    group: orderProducerGroup
+rocketmq:
+  name-server: 192.168.0.110:9876;192.168.0.105:9876
+  producer:
+    group: orderProducerGroup
 mq:
   order:
     consumer:

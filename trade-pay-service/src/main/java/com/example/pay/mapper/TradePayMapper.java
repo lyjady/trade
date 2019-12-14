@@ -3,10 +3,12 @@ package com.example.pay.mapper;
 
 import com.example.pojo.pojo.TradePay;
 import com.example.pojo.pojo.TradePayExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface TradePayMapper {
     int countByExample(TradePayExample example);
 

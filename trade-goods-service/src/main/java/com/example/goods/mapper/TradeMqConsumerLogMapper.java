@@ -3,10 +3,12 @@ package com.example.goods.mapper;
 import com.example.pojo.pojo.TradeMqConsumerLog;
 import com.example.pojo.pojo.TradeMqConsumerLogExample;
 import com.example.pojo.pojo.TradeMqConsumerLogKey;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface TradeMqConsumerLogMapper {
     int countByExample(TradeMqConsumerLogExample example);
 

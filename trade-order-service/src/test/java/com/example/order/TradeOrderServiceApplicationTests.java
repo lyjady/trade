@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 
 @SpringBootTest
@@ -15,7 +16,7 @@ class TradeOrderServiceApplicationTests {
 	private OrderService orderService;
 
 	@Test
-	public void takeOrder() {
+	public void takeOrder() throws IOException {
 		long couponId = 345959444133456245L;
 		long goodsId = 345959443973935104L;
 		long userId = 345963634385633280L;
@@ -31,5 +32,7 @@ class TradeOrderServiceApplicationTests {
 		order.setShippingFee(BigDecimal.ZERO);
 		order.setMoneyPaid(new BigDecimal(1000));
 		orderService.confirmOrder(order);
+
+		System.in.read();
 	}
 }

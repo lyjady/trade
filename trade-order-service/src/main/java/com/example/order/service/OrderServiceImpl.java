@@ -51,8 +51,8 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private TradeOrderMapper tradeOrderMapper;
 
-//    @Autowired
-//    private RocketMQTemplate rocketMQTemplate;
+    @Autowired
+    private RocketMQTemplate rocketMQTemplate;
 
     @Autowired
     private IDWorker idWorker;
@@ -76,6 +76,7 @@ public class OrderServiceImpl implements OrderService {
             changeCouponStatus(order);
             //5.使用余额
             reduceUserMoney(order);
+            CastException.cast(ShopCode.SHOP_ORDER_CONFIRM_FAIL);
             //6.确认订单
             updateOrderStatus(order);
             //7.返回成功状态
@@ -90,13 +91,13 @@ public class OrderServiceImpl implements OrderService {
             entity.setUserId(order.getUserId());
             entity.setUserMoney(order.getMoneyPaid());
             //2.返回失败状态
-//            Message message = new Message(topic, tag, order.getOrderId().toString(), JSON.toJSONString(entity).getBytes(StandardCharsets.UTF_8));
-//            try {
-//                rocketMQTemplate.getProducer().send(message);
-//            } catch (MQClientException | RemotingException | MQBrokerException | InterruptedException ex) {
-//                ex.printStackTrace();
-//                CastException.cast(ShopCode.SHOP_MQ_SEND_MESSAGE_FAIL);
-//            }
+            Message message = new Message(topic, tag, order.getOrderId().toString(), JSON.toJSONString(entity).getBytes(StandardCharsets.UTF_8));
+            try {
+                rocketMQTemplate.getProducer().send(message);
+            } catch (MQClientException | RemotingException | MQBrokerException | InterruptedException ex) {
+                ex.printStackTrace();
+                CastException.cast(ShopCode.SHOP_MQ_SEND_MESSAGE_FAIL);
+            }
             return new Result(ShopCode.SHOP_FAIL.getSuccess(), ShopCode.SHOP_FAIL.getMessage());
         }
     }
