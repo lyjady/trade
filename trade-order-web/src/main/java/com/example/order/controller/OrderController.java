@@ -2,6 +2,7 @@ package com.example.order.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.example.api.service.OrderService;
+import com.example.pojo.entry.Result;
 import com.example.pojo.pojo.TradeOrder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ public class OrderController {
     private OrderService orderService;
 
     @RequestMapping("/confirmOrder")
-    public void confirmOrder(@RequestBody TradeOrder tradeOrder) {
-        orderService.confirmOrder(tradeOrder);
+    public Result confirmOrder(@RequestBody TradeOrder tradeOrder) {
+        return orderService.confirmOrder(tradeOrder);
     }
 }

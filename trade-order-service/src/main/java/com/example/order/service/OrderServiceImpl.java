@@ -80,7 +80,7 @@ public class OrderServiceImpl implements OrderService {
             //6.确认订单
             updateOrderStatus(order);
             //7.返回成功状态
-            logger.info("订单:["+order.getOrderId()+"]确认成功");
+            logger.info("订单:[" + order.getOrderId() + "]确认成功");
             return new Result(ShopCode.SHOP_SUCCESS.getSuccess(), ShopCode.SHOP_SUCCESS.getMessage());
         } catch (Exception e) {
             //1.确认订单失败,发送消息
@@ -210,7 +210,7 @@ public class OrderServiceImpl implements OrderService {
         if (result.getSuccess().equals(ShopCode.SHOP_FAIL.getSuccess())) {
             CastException.cast(ShopCode.SHOP_REDUCE_GOODS_NUM_FAIL);
         }
-        logger.info("订单:["+order.getOrderId()+"]扣减库存["+order.getGoodsNumber()+"个]成功");
+        logger.info("订单:[" + order.getOrderId() + "]扣减库存[" + order.getGoodsNumber() + "个]成功");
     }
 
     private void changeCouponStatus(TradeOrder order) {
@@ -225,7 +225,7 @@ public class OrderServiceImpl implements OrderService {
             if (result.getSuccess().equals(ShopCode.SHOP_FAIL.getSuccess())) {
                 CastException.cast(ShopCode.SHOP_COUPON_USE_FAIL);
             }
-            logger.info("订单:["+order.getOrderId()+"]使用扣减优惠券["+coupon.getCouponPrice()+"元]成功");
+            logger.info("订单:[" + order.getOrderId() + "]使用扣减优惠券[" + coupon.getCouponPrice() + "元]成功");
         }
     }
 
@@ -242,7 +242,7 @@ public class OrderServiceImpl implements OrderService {
             if (result.getSuccess().equals(ShopCode.SHOP_FAIL.getSuccess())) {
                 CastException.cast(ShopCode.SHOP_USER_MONEY_REDUCE_FAIL);
             }
-            logger.info("订单:["+order.getOrderId()+"扣减余额["+order.getMoneyPaid()+"元]成功]");
+            logger.info("订单:[" + order.getOrderId() + "扣减余额[" + order.getMoneyPaid() + "元]成功]");
         }
     }
 
@@ -254,6 +254,6 @@ public class OrderServiceImpl implements OrderService {
         if (index < 0) {
             CastException.cast(ShopCode.SHOP_ORDER_CONFIRM_FAIL);
         }
-        logger.info("订单:["+order.getOrderId()+"]状态修改成功");
+        logger.info("订单:[" + order.getOrderId() + "]状态修改成功");
     }
 }

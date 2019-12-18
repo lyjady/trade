@@ -2,6 +2,7 @@ package com.example.pay.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.example.api.service.PayService;
+import com.example.pojo.entry.Result;
 import com.example.pojo.pojo.TradePay;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +20,12 @@ public class PayController {
     private PayService payService;
 
     @RequestMapping("/createPayOrder")
-    public void createPayOrder(@RequestBody TradePay tradePay) {
-        payService.createPayment(tradePay);
+    public Result createPayOrder(@RequestBody TradePay tradePay) {
+        return payService.createPayment(tradePay);
     }
 
     @RequestMapping("/callback")
-    public void callback(@RequestBody TradePay tradePay) {
-        payService.callbackPay(tradePay);
+    public Result callback(@RequestBody TradePay tradePay) {
+        return payService.callbackPay(tradePay);
     }
 }
