@@ -19,7 +19,7 @@ spring:
 mybatis:
   mapper-locations: classpath:com/example/coupon/mapper/*.xml
 rocketmq:
-  name-server: 192.168.0.110:9876;192.168.0.105:9876
+  name-server: 192.168.0.110:9876;192.168.0.107:9876
   producer:
     group: orderProducerGroup
 mq:

@@ -76,7 +76,7 @@ public class OrderServiceImpl implements OrderService {
             changeCouponStatus(order);
             //5.使用余额
             reduceUserMoney(order);
-            CastException.cast(ShopCode.SHOP_ORDER_CONFIRM_FAIL);
+//            CastException.cast(ShopCode.SHOP_ORDER_CONFIRM_FAIL);
             //6.确认订单
             updateOrderStatus(order);
             //7.返回成功状态

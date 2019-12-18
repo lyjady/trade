@@ -1,0 +1,13 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /order
+spring:
+  application:
+    name: dubbo-order-consumer
+  dubbo:
+    application:
+      id: dubbo-order-consumer
+      name: dubbo-order-consumer
+    registry:
+      address: zookeeper://192.168.0.110:2181;zookeeper://192.168.0.110:2182;zookeeper://192.168.0.110:2183

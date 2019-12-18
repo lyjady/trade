@@ -17,4 +17,13 @@ public interface PayService {
      * @description 创建支付订单
      */
     Result createPayment(TradePay tradePay);
+
+    /**
+     * @param tradePay
+     * @return com.example.pojo.entry.Result
+     * @author LinYongJin
+     * @date 2019/12/18 20:25
+     * @description 支付回调
+     */
+    Result callbackPay(TradePay tradePay);
 }

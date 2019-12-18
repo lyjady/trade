@@ -3,10 +3,12 @@ package com.example.pay.mapper;
 
 import com.example.pojo.pojo.TradeMqProducerTemp;
 import com.example.pojo.pojo.TradeMqProducerTempExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface TradeMqProducerTempMapper {
     int countByExample(TradeMqProducerTempExample example);
 

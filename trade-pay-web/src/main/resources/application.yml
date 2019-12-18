@@ -1,0 +1,14 @@
+server:
+  port: 9090
+  servlet:
+    context-path: /pay
+spring:
+  application:
+    name: dubbo-pay-consumer
+  dubbo:
+    application:
+      id: dubbo-pay-consumer
+      name: dubbo-pay-consumer
+    registry:
+      address: zookeeper://192.168.0.110:2181;zookeeper://192.168.0.110:2182;zookeeper://192.168.0.110:2183
+      
